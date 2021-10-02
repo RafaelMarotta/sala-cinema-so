@@ -1,0 +1,2 @@
+10x20 #filas x cadeiras
+14:30, 17:00, 20:30 #sessões
