@@ -1,4 +1,6 @@
-package com.sistemas.operacionais;
+package com.sistemas.operacionais.domain.enums;
+
+import com.sistemas.operacionais.domain.InteracaoUsuario;
 
 public enum UltimaAcaoEnum {
     CONSULTA,
@@ -18,4 +20,9 @@ public enum UltimaAcaoEnum {
                 return ACAO_INVALIDA;
         }
     }
+
+    public static boolean ehFluxoReservaCompleto(InteracaoUsuario interacaoUsuario) {
+        return interacaoUsuario.getUltimaAcao().equals(UltimaAcaoEnum.PAGAMENTO);
+    }
+
 }

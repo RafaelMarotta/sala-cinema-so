@@ -1,5 +1,8 @@
 package com.sistemas.operacionais;
 
+import com.sistemas.operacionais.domain.ConfiguracaoSalaCinema;
+import com.sistemas.operacionais.domain.SalaCinema;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -32,7 +35,7 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new SalaCinema();
+        return new SalaCinema(configuracaoSalaCinema);
     }
 
 }

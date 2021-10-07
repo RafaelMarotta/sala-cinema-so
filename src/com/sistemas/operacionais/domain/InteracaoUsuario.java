@@ -1,4 +1,7 @@
-package com.sistemas.operacionais;
+package com.sistemas.operacionais.domain;
+
+import com.sistemas.operacionais.domain.enums.TipoClienteEnum;
+import com.sistemas.operacionais.domain.enums.UltimaAcaoEnum;
 
 public class InteracaoUsuario {
 
@@ -39,7 +42,7 @@ public class InteracaoUsuario {
         return ultimaAcao;
     }
 
-    public boolean isTentaBuscaOutraPoltrona() {
+    public boolean ehTentaBuscaOutraPoltrona() {
         return tentaBuscaOutraPoltrona;
     }
 
