@@ -1,6 +1,6 @@
-package com.sistemas.operacionais.domain.enums;
+package com.sistemas.operacionais.domain.model.enums;
 
-import com.sistemas.operacionais.domain.InteracaoUsuario;
+import com.sistemas.operacionais.domain.model.InteracaoUsuario;
 
 public enum TipoClienteEnum {
     REGULAR,
@@ -22,11 +22,11 @@ public enum TipoClienteEnum {
     }
 
     public static boolean ehClienteMeiaEntrada(InteracaoUsuario interacaoUsuario) {
-        return interacaoUsuario.getTipoCliente().equals(TipoClienteEnum.MEIA_ENTRADA);
+        return interacaoUsuario.obterTipoCliente().equals(TipoClienteEnum.MEIA_ENTRADA);
     }
 
     public static boolean ehClienteClubeCinema(InteracaoUsuario interacaoReservada) {
-        return interacaoReservada.getTipoCliente().equals(TipoClienteEnum.CLUBE_CINEMA);
+        return interacaoReservada.obterTipoCliente().equals(TipoClienteEnum.CLUBE_CINEMA);
     }
 
 }

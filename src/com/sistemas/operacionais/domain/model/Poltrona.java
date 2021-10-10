@@ -1,14 +1,12 @@
-package com.sistemas.operacionais.domain;
+package com.sistemas.operacionais.domain.model;
 
-import com.sistemas.operacionais.domain.enums.TipoClienteEnum;
+import com.sistemas.operacionais.domain.model.enums.TipoClienteEnum;
 import com.sistemas.operacionais.exceptions.PoltronaNaoDisponivelException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Poltrona {
-
     private final List<InteracaoUsuario> interacoes = new ArrayList<>();
     private int idInteracaoReserva = 0;
 
@@ -18,14 +16,18 @@ public class Poltrona {
 
     public void realizaReserva(InteracaoUsuario interacaoUsuario) throws PoltronaNaoDisponivelException {
         if (ehPossivelReservar(interacaoUsuario)) {
-            idInteracaoReserva = interacaoUsuario.getId();
+            idInteracaoReserva = interacaoUsuario.obterId();
         } else {
             throw new PoltronaNaoDisponivelException();
         }
     }
 
     public InteracaoUsuario obterInteracaoReservaAtual() {
-        return interacoes.get(idInteracaoReserva);
+        return interacoes.stream().filter(e -> e.obterId() == idInteracaoReserva).findFirst().orElse(null);
+    }
+
+    public List<InteracaoUsuario> obterInteracoes() {
+        return interacoes;
     }
 
     private boolean ehPossivelReservar(InteracaoUsuario interacaoUsuario) {
@@ -35,7 +37,7 @@ public class Poltrona {
     }
 
     private boolean ehInteracaoPrioritariaSobreReservaAtual(InteracaoUsuario interacaoUsuario) {
-        InteracaoUsuario interacaoReservada = Objects.requireNonNull(obterInteracaoReservaAtual());
+        InteracaoUsuario interacaoReservada = obterInteracaoReservaAtual();
         if (TipoClienteEnum.ehClienteClubeCinema(interacaoReservada))
             return false;
         if (TipoClienteEnum.ehClienteClubeCinema(interacaoUsuario))
@@ -48,5 +50,4 @@ public class Poltrona {
     private boolean ehPoltronaNaoReservada() {
         return obterInteracaoReservaAtual() == null;
     }
-
 }
