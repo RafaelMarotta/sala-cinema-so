@@ -18,14 +18,17 @@ public class RelatorioInteracoesBuilder {
         this.statusService = ObterStatusRelatorioInteracaoService.build(salaCinema);
     }
 
+    // Constói um novo builder relátorio de interações a partir de uma sala de cinema
     public static RelatorioInteracoesBuilder builder(SalaCinema salaCinema) {
         return new RelatorioInteracoesBuilder(salaCinema);
     }
 
+    // Constói um novo relátorio de interações
     public RelatorioInteracoes build() {
         return new RelatorioInteracoes(build(new ArrayList<>()));
     }
 
+    // contrói a lista de relatórios de interações da sala de cinema
     private List<RelatorioInteracoesItem> build(List<RelatorioInteracoesItem> items) {
         salaCinema.obterPoltronas().values().forEach(sessao ->
                 sessao.values().forEach(poltrona ->
@@ -36,6 +39,9 @@ public class RelatorioInteracoesBuilder {
         return items;
     }
 
+    /* contrói um item de relatório de interações a partir de uma interação do usuário,
+    * definindo o cliente, pontrona, horário e status
+    */
     private RelatorioInteracoesItem build(InteracaoUsuario interacaoUsuario) {
         return new RelatorioInteracoesItem(
                 "Cliente " + (interacaoUsuario.obterId()+1),

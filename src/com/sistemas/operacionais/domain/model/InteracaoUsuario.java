@@ -3,6 +3,10 @@ package com.sistemas.operacionais.domain.model;
 import com.sistemas.operacionais.domain.model.enums.TipoClienteEnum;
 import com.sistemas.operacionais.domain.model.enums.UltimaAcaoEnum;
 
+/* Modela as informações de uma interação do usuário, como seu id, poltrona,
+*  horário escolhido, ultima ação, tipo do cliente, se tenta buscar outra poltrona,
+* tempo da interação e se é relocação
+*/
 public class InteracaoUsuario {
     private final int id;
     private final String poltrona;

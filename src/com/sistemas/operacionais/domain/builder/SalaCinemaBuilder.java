@@ -24,6 +24,7 @@ public class SalaCinemaBuilder {
         configuracaoSalaCinema.obterSessoes().forEach(e -> poltronas.put(e, obterPoltronas()));
     }
 
+    // mapeia poltronas associado-as a um index
     private Map<Integer, Poltrona> obterPoltronas() {
         Map<Integer, Poltrona> poltronas = new HashMap<>();
         for (int i = 1; i <= configuracaoSalaCinema.obterQuantidadeTotalPoltronas(); i++) {

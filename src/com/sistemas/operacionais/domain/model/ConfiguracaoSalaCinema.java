@@ -2,6 +2,7 @@ package com.sistemas.operacionais.domain.model;
 
 import java.util.List;
 
+// Modela as informações da sala de ciema, como suas dimensões e sessões
 public class ConfiguracaoSalaCinema {
     private final int quantidadeFileiras;
     private final int quantidadeCadeirasFileira;

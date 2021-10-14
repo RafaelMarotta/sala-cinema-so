@@ -7,6 +7,9 @@ import com.sistemas.operacionais.domain.model.enums.UltimaAcaoEnum;
 public class InteracaoUsuarioBuilder {
     private static final char DIVISOR_INTERACAO = ';';
 
+    /* contrói interação do usuário a partir de uma linha do arquivo, 
+    * separando poltrona, horário, comportamento nas fases, tipo de cliente e tempo da interação
+    */
     public static InteracaoUsuario build(String interacao, int line) {
         String[] campos = interacao.split(Character.toString(DIVISOR_INTERACAO));
         String poltrona = campos[0];

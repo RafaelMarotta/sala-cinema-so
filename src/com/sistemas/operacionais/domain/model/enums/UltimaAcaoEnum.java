@@ -2,6 +2,7 @@ package com.sistemas.operacionais.domain.model.enums;
 
 import com.sistemas.operacionais.domain.model.InteracaoUsuario;
 
+// Enum para definir os tipos de ação do usuário e sua descrição
 public enum UltimaAcaoEnum {
     CONSULTA("Apenas consultou"),
     SELECAO("Não confirmou o pagamento"),
@@ -18,6 +19,7 @@ public enum UltimaAcaoEnum {
         this.status = status;
     }
 
+    // Obtém a última ação baseada nas letras que vêm do arquivo
     public static UltimaAcaoEnum obterAcao(String comportamento) {
         switch (comportamento) {
             case "CXX":
@@ -31,6 +33,7 @@ public enum UltimaAcaoEnum {
         }
     }
 
+    // Retorna se o fluxo foi concluído caso a última interação do usuário seja de pagamento
     public static boolean ehFluxoReservaCompleto(InteracaoUsuario interacaoUsuario) {
         return interacaoUsuario.obterUltimaAcao().equals(UltimaAcaoEnum.PAGAMENTO);
     }
