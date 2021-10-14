@@ -2,6 +2,7 @@ package com.sistemas.operacionais.domain.model;
 
 import java.util.List;
 
+// Modelo que armazena as configurações da sala
 public class ConfiguracaoSalaCinema {
     private final int quantidadeFileiras;
     private final int quantidadeCadeirasFileira;

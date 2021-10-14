@@ -2,6 +2,7 @@ package com.sistemas.operacionais.domain.model;
 
 import java.util.List;
 
+// Modelo que representa o relatório completo de interações
 public class RelatorioInteracoes {
     private final List<RelatorioInteracoesItem> interacoes;
 

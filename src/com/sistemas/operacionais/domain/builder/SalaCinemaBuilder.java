@@ -25,6 +25,7 @@ public class SalaCinemaBuilder {
         configuracaoSalaCinema.obterSessoes().forEach(e -> poltronas.put(e, obterPoltronas()));
     }
 
+    // Cria lista de poltronas vazias de acordo com o modelo ConfiguracaoSalaCinema
     private Map<String, Poltrona> obterPoltronas() {
         Map<String, Poltrona> poltronas = new HashMap<>();
         for (int i = 0; i < configuracaoSalaCinema.obterQuantidadeFileiras(); i++) {

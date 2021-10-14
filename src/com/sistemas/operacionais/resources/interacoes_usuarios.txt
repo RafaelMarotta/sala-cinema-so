@@ -1,7 +1,112 @@
-J07;17:00;CSP;T;R;7
-J07;17:00;CSP;T;M;7
-A10;17:00;CXX;D;R;2
-J07;17:00;CSP;T;C;7
-A10;17:00;CXX;D;C;2
-A10;17:00;CXX;D;M;2
-C04;14:30;CSX;T;M;5
+# Interações Cadeira A01 - Sessão 17:00
+# Cliente 1 - Apenas Consultou
+A01;17:00;CXX;D;C;2
+# Cliente 2 -> Realizou o fluxo completo e não está marcado para realocar
+A01;17:00;CSP;D;M;2
+# Cliente 3 -> Cliente com clube cinema e deve ter prioridade sobre o cliente 2 na reserva
+A01;17:00;CSP;D;C;2
+################################################################################################
+# Interações Cadeira A02 - Sessão 17:00
+# Cliente 4 - Parou no passo da Seleção
+A02;17:00;CSX;D;C;2
+# Cliente 5 -> Realizou o fluxo completo e está marcado para realocar
+A02;17:00;CSP;T;M;2
+# Cliente 6 -> Cliente com clube cinema e deve ter prioridade sobre o cliente 5 na reserva
+A02;17:00;CSP;D;C;3
+################################################################################################
+# Interações Cadeira J20 - Sessão 14:30
+# Cliente 7 - Realizou o fluxo completo e tem a maior prioridade
+J20;14:30;CSP;D;C;2
+# Cliente 8 -> Realizou o fluxo completo e está marcado para realocar
+J20;14:30;CSP;T;R;2
+# Cliente 9 -> Realizou o fluxo completo mas não está marcado para realocar
+J20;14:30;CSP;D;M;5
+################################################################################################
+## Interações a cima de 40% meia entrada - Sessão 20:30
+A01;20:30;CSP;D;M;5
+A02;20:30;CSP;D;M;5
+A03;20:30;CSP;D;M;5
+A04;20:30;CSP;D;M;5
+A05;20:30;CSP;D;M;5
+A06;20:30;CSP;D;M;5
+A07;20:30;CSP;D;M;5
+A08;20:30;CSP;D;M;5
+A09;20:30;CSP;D;M;5
+A10;20:30;CSP;D;M;5
+A11;20:30;CSP;D;M;5
+A12;20:30;CSP;D;M;5
+A13;20:30;CSP;D;M;5
+A14;20:30;CSP;D;M;5
+A15;20:30;CSP;D;M;5
+A16;20:30;CSP;D;M;5
+A17;20:30;CSP;D;M;5
+A18;20:30;CSP;D;M;5
+A19;20:30;CSP;D;M;5
+A20;20:30;CSP;D;M;5
+#####
+B01;20:30;CSP;D;M;5
+B02;20:30;CSP;D;M;5
+B03;20:30;CSP;D;M;5
+B04;20:30;CSP;D;M;5
+B05;20:30;CSP;D;M;5
+B06;20:30;CSP;D;M;5
+B07;20:30;CSP;D;M;5
+B08;20:30;CSP;D;M;5
+B09;20:30;CSP;D;M;5
+B10;20:30;CSP;D;M;5
+B11;20:30;CSP;D;M;5
+B12;20:30;CSP;D;M;5
+B13;20:30;CSP;D;M;5
+B14;20:30;CSP;D;M;5
+B15;20:30;CSP;D;M;5
+B16;20:30;CSP;D;M;5
+B17;20:30;CSP;D;M;5
+B18;20:30;CSP;D;M;5
+B19;20:30;CSP;D;M;5
+B20;20:30;CSP;D;M;5
+#####
+C01;20:30;CSP;D;M;5
+C02;20:30;CSP;D;M;5
+C03;20:30;CSP;D;M;5
+C04;20:30;CSP;D;M;5
+C05;20:30;CSP;D;M;5
+C06;20:30;CSP;D;M;5
+C07;20:30;CSP;D;M;5
+C08;20:30;CSP;D;M;5
+C09;20:30;CSP;D;M;5
+C10;20:30;CSP;D;M;5
+C11;20:30;CSP;D;M;5
+C12;20:30;CSP;D;M;5
+C13;20:30;CSP;D;M;5
+C14;20:30;CSP;D;M;5
+C15;20:30;CSP;D;M;5
+C16;20:30;CSP;D;M;5
+C17;20:30;CSP;D;M;5
+C18;20:30;CSP;D;M;5
+C19;20:30;CSP;D;M;5
+C20;20:30;CSP;D;M;5
+#####
+D01;20:30;CSP;D;M;5
+D02;20:30;CSP;D;M;5
+D03;20:30;CSP;D;M;5
+D04;20:30;CSP;D;M;5
+D05;20:30;CSP;D;M;5
+D06;20:30;CSP;D;M;5
+D07;20:30;CSP;D;M;5
+D08;20:30;CSP;D;M;5
+D09;20:30;CSP;D;M;5
+D10;20:30;CSP;D;M;5
+D11;20:30;CSP;D;M;5
+D12;20:30;CSP;D;M;5
+D13;20:30;CSP;D;M;5
+D14;20:30;CSP;D;M;5
+D15;20:30;CSP;D;M;5
+D16;20:30;CSP;D;M;5
+D17;20:30;CSP;D;M;5
+D18;20:30;CSP;D;M;5
+D19;20:30;CSP;D;M;5
+D20;20:30;CSP;D;M;5
+####
+## Não podem reservar
+E01;20:30;CSP;D;M;5
+E02;20:30;CSP;T;M;5

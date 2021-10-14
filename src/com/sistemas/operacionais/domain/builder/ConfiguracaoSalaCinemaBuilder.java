@@ -10,6 +10,7 @@ public class ConfiguracaoSalaCinemaBuilder {
     private static final char DIVISOR_DIMENSOES = 'X';
     private static final char DIVISOR_SESSOES = ',';
 
+    // Converte as linhas do arquivo de configurações na entidade "ConfiguracaoSalaCinema"
     public static ConfiguracaoSalaCinema build(List<String> lines) {
         String[] dimensoes = trataString(lines.get(0)).split(Character.toString(DIVISOR_DIMENSOES));
         int quantidadeFileiras = Integer.parseInt(dimensoes[0]);
@@ -18,6 +19,7 @@ public class ConfiguracaoSalaCinemaBuilder {
         return new ConfiguracaoSalaCinema(quantidadeFileiras, quantidadeCadeirasFileira, sessoes);
     }
 
+    // Limpa espaços em branco e ignora comentários
     private static String trataString(String string) {
         return string.toUpperCase(Locale.ROOT).substring(0, string.indexOf("#")).replaceAll(" ", "");
     }

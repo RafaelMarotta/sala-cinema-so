@@ -1,10 +1,11 @@
 package com.sistemas.operacionais.domain.model;
 
+// Modelo que representa o item do relatório de interações
 public class RelatorioInteracoesItem {
-    private String idCliente;
-    private String cadeira;
-    private String sessao;
-    private String status;
+    private final String idCliente;
+    private final String cadeira;
+    private final String sessao;
+    private final String status;
 
     public RelatorioInteracoesItem(String idCliente, String cadeira, String sessao, String status) {
         this.idCliente = idCliente;

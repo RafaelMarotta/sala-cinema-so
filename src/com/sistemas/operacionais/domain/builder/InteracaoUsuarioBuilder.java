@@ -7,6 +7,7 @@ import com.sistemas.operacionais.domain.model.enums.UltimaAcaoEnum;
 public class InteracaoUsuarioBuilder {
     private static final char DIVISOR_INTERACAO = ';';
 
+    // Converte uma linha do arquivo de interação para a entidade de modelo "InteracaoUsuario"
     public static InteracaoUsuario build(String interacao, int line) {
         String[] campos = interacao.split(Character.toString(DIVISOR_INTERACAO));
         String poltrona = campos[0];

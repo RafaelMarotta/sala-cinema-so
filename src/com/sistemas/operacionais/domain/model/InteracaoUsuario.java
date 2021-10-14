@@ -3,6 +3,7 @@ package com.sistemas.operacionais.domain.model;
 import com.sistemas.operacionais.domain.model.enums.TipoClienteEnum;
 import com.sistemas.operacionais.domain.model.enums.UltimaAcaoEnum;
 
+// Modelo que armazena a interação de usuário
 public class InteracaoUsuario {
     private final int id;
     private String poltrona;

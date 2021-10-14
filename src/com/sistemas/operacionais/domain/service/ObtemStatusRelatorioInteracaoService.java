@@ -5,21 +5,23 @@ import com.sistemas.operacionais.domain.model.Poltrona;
 import com.sistemas.operacionais.domain.model.SalaCinema;
 import com.sistemas.operacionais.domain.model.enums.UltimaAcaoEnum;
 
-public class ObterStatusRelatorioInteracaoService {
+// Obtém o status da interação que será exibido no relatório
+public class ObtemStatusRelatorioInteracaoService {
     private final SalaCinemaQueryService queryService;
 
-    private ObterStatusRelatorioInteracaoService(SalaCinema salaCinema) {
+    private ObtemStatusRelatorioInteracaoService(SalaCinema salaCinema) {
         this.queryService = SalaCinemaQueryService.build(salaCinema.obterPoltronas());
     }
 
-    public static ObterStatusRelatorioInteracaoService build(SalaCinema salaCinema) {
-        return new ObterStatusRelatorioInteracaoService(salaCinema);
+    public static ObtemStatusRelatorioInteracaoService build(SalaCinema salaCinema) {
+        return new ObtemStatusRelatorioInteracaoService(salaCinema);
     }
 
+    // Obtém o status da interação que será exibido no relatório
     public String obterStatus(InteracaoUsuario interacaoUsuario) {
         if(UltimaAcaoEnum.ehFluxoReservaCompleto(interacaoUsuario)) {
             Poltrona poltrona = queryService.obterPoltrona(interacaoUsuario);
-            if (poltrona.obterInteracaoReservaAtual().equals(interacaoUsuario)) {
+            if (poltrona.obterInteracaoReservaAtual() == interacaoUsuario) {
                 return interacaoUsuario.ehRealocacao() ? "Realocado("+interacaoUsuario.obterPoltronaInteracao()+")" : "Reservado";
             }
             return "Não foi possível realizar reserva";

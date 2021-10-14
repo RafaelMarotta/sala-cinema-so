@@ -23,32 +23,36 @@ public class SalaCinemaRealocaReservaService {
     }
 
     public void realocaReservas() {
+        // Trata os casos de excedentes dos clientes clube cinema
         obterClientesExcedentesPorTipoCliente(TipoClienteEnum.CLUBE_CINEMA).forEach(this::realocaReservaClubeCinema);
+        // Trata os casos de excedentes dos clientes meia entrada
         obterClientesExcedentesPorTipoCliente(TipoClienteEnum.MEIA_ENTRADA).forEach(this::realocaReservaMeiaEntrada);
+        // Trata os casos de excedentes dos clientes regulares
         obterClientesExcedentesPorTipoCliente(TipoClienteEnum.REGULAR).forEach(this::realocaReservaRegular);
     }
 
     protected void realocaReservaClubeCinema(InteracaoUsuario interacaoUsuario) {
-        if (realocaReservaTipoCliente(interacaoUsuario, null)) {
-            return;
+        if (realocaReservaTipoCliente(interacaoUsuario, null)) { // Tenta realocar em uma cadeira vazia
+            return; // Conseguiu realocar
         }
-        if (realocaReservaTipoCliente(interacaoUsuario, TipoClienteEnum.REGULAR)) {
-            return;
+        if (realocaReservaTipoCliente(interacaoUsuario, TipoClienteEnum.REGULAR)) {  // Tenta realocar em uma cadeira com um cliente regular
+            return; // Conseguiu realocar
         }
-        realocaReservaTipoCliente(interacaoUsuario, TipoClienteEnum.MEIA_ENTRADA);
+        realocaReservaTipoCliente(interacaoUsuario, TipoClienteEnum.MEIA_ENTRADA); // Tenta realocar em uma cadeira com um cliente meia entrada
     }
 
     protected void realocaReservaMeiaEntrada(InteracaoUsuario interacaoUsuario) {
-        if (realocaReservaTipoCliente(interacaoUsuario, null)) {
-            return;
+        if (realocaReservaTipoCliente(interacaoUsuario, null)) {  // Tenta realocar em uma cadeira vazia
+            return; // Conseguiu realocar
         }
         realocaReservaTipoCliente(interacaoUsuario, TipoClienteEnum.REGULAR);
     }
 
     protected void realocaReservaRegular(InteracaoUsuario interacaoUsuario) {
-        realocaReservaTipoCliente(interacaoUsuario, null);
+        realocaReservaTipoCliente(interacaoUsuario, null);  // Tenta realocar em uma cadeira com um cliente regular
     }
 
+    // Realoca cadeira de acorda com o tipo de cliente presente na cadeira
     private boolean realocaReservaTipoCliente(InteracaoUsuario interacaoUsuario, TipoClienteEnum tipoCliente) {
         List<Poltrona> poltronasDisponiveis = queryService.obterPoltronasReservadasPorTipoClienteESessao(interacaoUsuario.obterHorario(), tipoCliente);
         if (existeCadeiraDisponivel(poltronasDisponiveis)) {
@@ -57,19 +61,22 @@ public class SalaCinemaRealocaReservaService {
         return false;
     }
 
+    // Realiza o processo de realocação de reserva
     private boolean realocaReserva(InteracaoUsuario interacaoUsuario, Poltrona poltrona) {
-        queryService.obterPoltrona(interacaoUsuario).obterInteracoes().remove(interacaoUsuario);
-        interacaoUsuario.realocaPoltrona(poltrona.obterId());
-        realizaReservaService.realizaReserva(poltrona, interacaoUsuario);
-        poltrona.adicionaInteracao(interacaoUsuario);
-        salaCinema.obterExcedentes().remove(interacaoUsuario);
-        return true;
+        queryService.obterPoltrona(interacaoUsuario).obterInteracoes().remove(interacaoUsuario); // Remove a interação da antiga poltrona
+        interacaoUsuario.realocaPoltrona(poltrona.obterId()); // Realoca a poltrona do cliente
+        realizaReservaService.realizaReserva(poltrona, interacaoUsuario); // Chama o fluxo de realização de reserva
+        poltrona.adicionaInteracao(interacaoUsuario); // Adiciona interação na novo poltrona realocada
+        salaCinema.obterExcedentes().remove(interacaoUsuario); // Exclui a interação dos excedentes
+        return true; // Retorna sucesso
     }
 
-    private boolean existeCadeiraDisponivel(List<Poltrona> poltronasVazias) {
-        return !poltronasVazias.isEmpty();
+    // Retorna se existem poltronas disponiveis na lista de cadeiras recebida
+    private boolean existeCadeiraDisponivel(List<Poltrona> poltronasDisponiveis) {
+        return !poltronasDisponiveis.isEmpty();
     }
 
+    // Segrega a lista de interações excedentes por tipo cliente
     public List<InteracaoUsuario> obterClientesExcedentesPorTipoCliente(TipoClienteEnum tipoCliente) {
         return salaCinema.obterExcedentes().stream()
                 .filter(e -> e.obterTipoCliente().equals(tipoCliente))

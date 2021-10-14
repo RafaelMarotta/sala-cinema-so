@@ -3,6 +3,7 @@ package com.sistemas.operacionais.domain.model;
 import java.util.List;
 import java.util.Map;
 
+// Modelo que representa a Sala de cinema como um todo
 public class SalaCinema {
     private final Map<String, Map<String, Poltrona>> poltronas;
     private final List<InteracaoUsuario> excedentes;
