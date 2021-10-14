@@ -7,6 +7,7 @@ import com.sistemas.operacionais.domain.model.ConfiguracaoSalaCinema;
 import com.sistemas.operacionais.domain.model.RelatorioInteracoes;
 import com.sistemas.operacionais.domain.model.SalaCinema;
 import com.sistemas.operacionais.domain.service.SalaCinemaAdicionaInteracoesService;
+import com.sistemas.operacionais.domain.service.SalaCinemaRealocaReservaMeiaEntradaService;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,12 +19,15 @@ import java.util.List;
 public class Main {
 
     private static SalaCinemaAdicionaInteracoesService salaCinemaAdicionaInteracoesService;
+    private static SalaCinemaRealocaReservaMeiaEntradaService realocaReservaService;
 
     public static void main(String[] args) throws IOException {
         ConfiguracaoSalaCinema configuracaoSalaCinema = obterConfiguracoesSalaCinema();
         SalaCinema salaCinema = SalaCinemaBuilder.builder(configuracaoSalaCinema).build();
+        realocaReservaService = new SalaCinemaRealocaReservaMeiaEntradaService(salaCinema, configuracaoSalaCinema);
         salaCinemaAdicionaInteracoesService = new SalaCinemaAdicionaInteracoesService(salaCinema, configuracaoSalaCinema);
         adicionaInteracoesSalaCinema();
+        realocaReservaService.realocaReservas();
         RelatorioInteracoes relatorioInteracoes = RelatorioInteracoesBuilder.builder(salaCinema).build();
         Files.writeString(Path.of("src/com/sistemas/operacionais/resources/vendas.txt"), relatorioInteracoes.toString());
     }

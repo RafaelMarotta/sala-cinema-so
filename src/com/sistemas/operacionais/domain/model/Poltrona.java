@@ -1,6 +1,7 @@
 package com.sistemas.operacionais.domain.model;
 
 import com.sistemas.operacionais.domain.model.enums.TipoClienteEnum;
+import com.sistemas.operacionais.domain.service.IAdicionaFilaExcedentes;
 import com.sistemas.operacionais.exceptions.PoltronaNaoDisponivelException;
 
 import java.util.ArrayList;
@@ -8,16 +9,24 @@ import java.util.List;
 
 // Modela as informações de uma poltrona, como suas interações e o ID da interação que a reservou
 public class Poltrona {
+    private final String id;
     private final List<InteracaoUsuario> interacoes = new ArrayList<>();
     private int idInteracaoReserva = 0;
+
+    public Poltrona(String id) {
+        this.id = id;
+    }
 
     public void adicionaInteracao(InteracaoUsuario interacaoUsuario) {
         interacoes.add(interacaoUsuario);
     }
-    
+
     // Realiza a reserva caso esteja disponível
-    public void realizaReserva(InteracaoUsuario interacaoUsuario) throws PoltronaNaoDisponivelException {
+    public void realizaReserva(InteracaoUsuario interacaoUsuario, IAdicionaFilaExcedentes adicionaFilaExcedentes) throws PoltronaNaoDisponivelException {
         if (ehPossivelReservar(interacaoUsuario)) {
+            if(!ehPoltronaNaoReservada() && obterInteracaoReservaAtual().ehTentaBuscaOutraPoltrona()) {
+                adicionaFilaExcedentes.adicionaExcedente(obterInteracaoReservaAtual());
+            }
             idInteracaoReserva = interacaoUsuario.obterId();
         } else {
             throw new PoltronaNaoDisponivelException();
@@ -54,5 +63,9 @@ public class Poltrona {
 
     private boolean ehPoltronaNaoReservada() {
         return obterInteracaoReservaAtual() == null;
+    }
+
+    public String obterId() {
+        return this.id;
     }
 }
