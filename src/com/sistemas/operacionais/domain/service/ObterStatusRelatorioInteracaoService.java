@@ -20,7 +20,7 @@ public class ObterStatusRelatorioInteracaoService {
         if(UltimaAcaoEnum.ehFluxoReservaCompleto(interacaoUsuario)) {
             Poltrona poltrona = queryService.obterPoltrona(interacaoUsuario);
             if (poltrona.obterInteracaoReservaAtual().equals(interacaoUsuario)) {
-                return interacaoUsuario.ehRealocacao() ? "Realocado" : "Reservado";
+                return interacaoUsuario.ehRealocacao() ? "Realocado("+interacaoUsuario.obterPoltronaInteracao()+")" : "Reservado";
             }
             return "Não foi possível realizar reserva";
         }
