@@ -17,8 +17,8 @@ public class SalaCinemaAdicionaInteracoesService {
         this.salaCinemaRealizaReservaService = new SalaCinemaRealizaReservaService(salaCinema, configuracaoSalaCinema);
     }
 
-    public void adicionaInteracao(String interacao, int line) {
-        InteracaoUsuario interacaoUsuario = InteracaoUsuarioBuilder.build(interacao, line); //Cria o objeto de modelo InteracaoUsuario
+    public void adicionaInteracao(String interacao, int line, int idPontoVenda) {
+        InteracaoUsuario interacaoUsuario = InteracaoUsuarioBuilder.build(interacao, line, idPontoVenda); //Cria o objeto de modelo InteracaoUsuario
         Poltrona poltrona = queryService.obterPoltrona(interacaoUsuario); // Obtém o objeto poltrona respectivo da lista de poltronas da sala
         poltrona.adicionaInteracao(interacaoUsuario); // Adiciona na poltrona a interação
         if (UltimaAcaoEnum.ehFluxoReservaCompleto(interacaoUsuario)) { // Se o usuário realizou todo o processo de reserva

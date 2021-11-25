@@ -29,10 +29,11 @@ public class RelatorioInteracoesBuilder {
     // Percorre a lista de interações e converte para uma lista de itens do relatório
     private List<RelatorioInteracoesItem> build(List<RelatorioInteracoesItem> items) {
         salaCinema.obterPoltronas().values().forEach(sessao ->
-                sessao.values().forEach(poltrona ->
-                        poltrona.obterInteracoes().forEach(interacao ->
-                                items.add(build(interacao))
-                        ))
+                sessao.values().forEach(
+                        poltrona -> poltrona.obterInteracoes().forEach(interacao ->
+                            items.add(build(interacao))
+                        )
+                )
         );
         return items;
     }
@@ -40,7 +41,8 @@ public class RelatorioInteracoesBuilder {
     // Converte a entidade "InteracaoUsuario" para a entidade "RelatorioInteracoesItem"
     private RelatorioInteracoesItem build(InteracaoUsuario interacaoUsuario) {
         return new RelatorioInteracoesItem(
-                "Cliente " + (interacaoUsuario.obterId()+1),
+                "Cliente " + (interacaoUsuario.obterId() + 1),
+                "Ponto Venda " + (interacaoUsuario.obterIdPontoVenda()),
                 interacaoUsuario.obterPoltrona(),
                 interacaoUsuario.obterHorario(),
                 statusService.obterStatus(interacaoUsuario)

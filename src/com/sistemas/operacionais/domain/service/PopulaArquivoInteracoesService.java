@@ -1,42 +1,74 @@
 package com.sistemas.operacionais.domain.service;
 
-import java.io.File;
+import com.sistemas.operacionais.domain.model.FilesContextControl;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.Semaphore;
 
 // Ler o arquivo de interações e popular no Map
-public class PopulaArquivoInteracoesService {
+public class PopulaArquivoInteracoesService extends Thread { // Herda de thread para permitir a execução em uma thread desatachada da thread principal do programa
 
     private final SalaCinemaAdicionaInteracoesService salaCinemaAdicionaInteracoesService;
-    private static final String ARQUIVO_INTERACOES = "src/com/sistemas/operacionais/resources/interacoes_usuarios.txt";
+    private final Semaphore semaforo;
+    private final Path arquivo;
+    private final int idPontoVenda;
+    private final StringBuilder horariosBuilder;
 
-    public PopulaArquivoInteracoesService(SalaCinemaAdicionaInteracoesService salaCinemaAdicionaInteracoesService) {
+    public PopulaArquivoInteracoesService(Semaphore semaforo, SalaCinemaAdicionaInteracoesService salaCinemaAdicionaInteracoesService, Path arquivo, int idPontoVenda, StringBuilder sb) {
         this.salaCinemaAdicionaInteracoesService = salaCinemaAdicionaInteracoesService;
+        this.semaforo = semaforo;
+        this.arquivo = arquivo;
+        this.idPontoVenda = idPontoVenda;
+        this.horariosBuilder = sb;
     }
 
-    public void adicionaInteracoesSalaCinema() throws IOException {
+    @Override
+    public void run() {
+        try {
+            adicionaInteracoesSalaCinema(); // Adiciona as interações na sala de cinema
+            semaforo.acquire(); //Bloqueia semaforo
+            // Adiciona no final do relatório a informação sobre o horário final de processamento do determinado ponto de venda
+            horariosBuilder.append(String.format("Ponto - %d: %s\n", idPontoVenda, LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))));
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace(); // Exibe stackTrace do erro
+        } finally {
+            semaforo.release(); //Libera semaforo
+        }
+    }
+
+    private void adicionaInteracoesSalaCinema() throws IOException {
         // Lê todas as linhas do arquivo de interações e salva em uma lista de strings
-        List<String> interacoes = Files.readAllLines(obterPathArquivoInteracoes(), StandardCharsets.UTF_8);
+        List<String> interacoes = Files.readAllLines(arquivo, StandardCharsets.UTF_8);
         adicionaInteracoes(interacoes); // Chama o mpetodo responsável por iterar na lista de strings e adicionar as interações
     }
 
     private void adicionaInteracoes(List<String> linhas) {
-        AtomicInteger quantidadeInteracoes = new AtomicInteger(); // Utilizado pq estamos manipulando a variavel dentro de uma expressão lambda
         linhas.forEach(linha -> {
             if (linha.toCharArray()[0] == '#') { //Ignora os comentários no arquivo de interação
+                FilesContextControl.incrementAndGetReadedLine(); // Incrementa número de linhas lidas
                 return;
             }
-            // Chama o serviço responsável por adicionar a interação e incrementa o contador de interações
-            salaCinemaAdicionaInteracoesService.adicionaInteracao(linha, quantidadeInteracoes.getAndIncrement());
+            System.out.printf("Interação (- %d%n) - %s - Ponto Venda - %d%n", FilesContextControl.getIdCliente(), linha, idPontoVenda); // Exibe log
+            adicionaInteracao(linha); // Adiciona Interação
         });
     }
 
-    // Obtém o path do arquivo de interações
-    private Path obterPathArquivoInteracoes() {
-        return new File(ARQUIVO_INTERACOES).toPath();
+    private void adicionaInteracao(String linha) {
+        try {
+            // Chama o serviço responsável por adicionar a interação e incrementa o contador de interaçõe
+            semaforo.acquire();
+            salaCinemaAdicionaInteracoesService.adicionaInteracao(linha, FilesContextControl.incrementAndGetIdCliente(), idPontoVenda);
+            FilesContextControl.incrementAndGetReadedLine();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            semaforo.release();
+        }
     }
 }
