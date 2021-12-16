@@ -1,0 +1,7 @@
+# Interações Cadeira A01 - Sessão 17:00
+# Cliente 1 - Apenas Consultou
+A01;17:00;CXX;D;C;2;3
+# Cliente 2 -> Realizou o fluxo completo e não está marcado para realocar
+A01;17:00;CSP;D;M;2;5
+# Cliente 3 -> Cliente com clube cinema e deve ter prioridade sobre o cliente 2 na reserva
+A01;17:00;CSP;D;C;2;6

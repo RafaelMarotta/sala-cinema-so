@@ -9,11 +9,11 @@ public class FilesContextControl {
     private static AtomicInteger numberOfLinesReaded = new AtomicInteger(0);
 
     public static int incrementAndGetReadedLine() {
-        return numberOfLinesReaded.incrementAndGet();
+        return numberOfLinesReaded.getAndIncrement();
     }
 
     public static int incrementAndGetIdCliente() {
-        return idCliente.incrementAndGet();
+        return idCliente.getAndIncrement();
     }
 
     public static int getIdCliente() {

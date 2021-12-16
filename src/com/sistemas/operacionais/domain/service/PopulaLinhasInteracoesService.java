@@ -12,18 +12,18 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 
 // Ler o arquivo de interações e popular no Map
-public class PopulaArquivoInteracoesService extends Thread { // Herda de thread para permitir a execução em uma thread desatachada da thread principal do programa
+public class PopulaLinhasInteracoesService extends Thread { // Herda de thread para permitir a execução em uma thread desatachada da thread principal do programa
 
     private final SalaCinemaAdicionaInteracoesService salaCinemaAdicionaInteracoesService;
     private final Semaphore semaforo;
-    private final Path arquivo;
+    private final List<String> interacoes;
     private final int idPontoVenda;
     private final StringBuilder horariosBuilder;
 
-    public PopulaArquivoInteracoesService(Semaphore semaforo, SalaCinemaAdicionaInteracoesService salaCinemaAdicionaInteracoesService, Path arquivo, int idPontoVenda, StringBuilder sb) {
+    public PopulaLinhasInteracoesService(Semaphore semaforo, SalaCinemaAdicionaInteracoesService salaCinemaAdicionaInteracoesService, List<String> interacoes, int idPontoVenda, StringBuilder sb) {
         this.salaCinemaAdicionaInteracoesService = salaCinemaAdicionaInteracoesService;
         this.semaforo = semaforo;
-        this.arquivo = arquivo;
+        this.interacoes = interacoes;
         this.idPontoVenda = idPontoVenda;
         this.horariosBuilder = sb;
     }
@@ -43,8 +43,6 @@ public class PopulaArquivoInteracoesService extends Thread { // Herda de thread 
     }
 
     private void adicionaInteracoesSalaCinema() throws IOException {
-        // Lê todas as linhas do arquivo de interações e salva em uma lista de strings
-        List<String> interacoes = Files.readAllLines(arquivo, StandardCharsets.UTF_8);
         adicionaInteracoes(interacoes); // Chama o mpetodo responsável por iterar na lista de strings e adicionar as interações
     }
 
@@ -54,7 +52,6 @@ public class PopulaArquivoInteracoesService extends Thread { // Herda de thread 
                 FilesContextControl.incrementAndGetReadedLine(); // Incrementa número de linhas lidas
                 return;
             }
-            System.out.printf("Interação (- %d%n) - %s - Ponto Venda - %d%n", FilesContextControl.getIdCliente(), linha, idPontoVenda); // Exibe log
             adicionaInteracao(linha); // Adiciona Interação
         });
     }
@@ -63,6 +60,7 @@ public class PopulaArquivoInteracoesService extends Thread { // Herda de thread 
         try {
             // Chama o serviço responsável por adicionar a interação e incrementa o contador de interaçõe
             semaforo.acquire();
+            //System.out.printf("Interação (- %d%n) - %s - Ponto Venda - %d%n", FilesContextControl.getIdCliente(), linha, idPontoVenda); // Exibe log
             salaCinemaAdicionaInteracoesService.adicionaInteracao(linha, FilesContextControl.incrementAndGetIdCliente(), idPontoVenda);
             FilesContextControl.incrementAndGetReadedLine();
         } catch (Exception e) {

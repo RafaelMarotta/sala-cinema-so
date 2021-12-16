@@ -41,7 +41,7 @@ public class RelatorioInteracoesBuilder {
     // Converte a entidade "InteracaoUsuario" para a entidade "RelatorioInteracoesItem"
     private RelatorioInteracoesItem build(InteracaoUsuario interacaoUsuario) {
         return new RelatorioInteracoesItem(
-                "Cliente " + (interacaoUsuario.obterId() + 1),
+                "Cliente " + (interacaoUsuario.obterId()),
                 "Ponto Venda " + (interacaoUsuario.obterIdPontoVenda()),
                 interacaoUsuario.obterPoltrona(),
                 interacaoUsuario.obterHorario(),
