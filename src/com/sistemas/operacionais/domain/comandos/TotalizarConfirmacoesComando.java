@@ -13,10 +13,10 @@ import java.nio.file.Path;
 
 public class TotalizarConfirmacoesComando {
 
-    private SalaCinemaRealocaReservaService realocaReservaService;
-    private SalaCinema salaCinema;
-    private StringBuilder horariosBuilder;
-    private ConfiguracoesUsuario configuracoesUsuario;
+    private final SalaCinemaRealocaReservaService realocaReservaService;
+    private final SalaCinema salaCinema;
+    private final StringBuilder horariosBuilder;
+    private final ConfiguracoesUsuario configuracoesUsuario;
 
     public TotalizarConfirmacoesComando(SalaCinemaRealocaReservaService realocaReservaService, SalaCinema salaCinema, StringBuilder horariosBuilder, ConfiguracoesUsuario configuracoesUsuario) {
         this.realocaReservaService = realocaReservaService;
@@ -43,12 +43,12 @@ public class TotalizarConfirmacoesComando {
     }
 
     private void geraRelatorio() throws IOException {
-        RelatorioInteracoes relatorioInteracoes = RelatorioInteracoesBuilder.builder(salaCinema).build();
-        String relatorio = relatorioInteracoes.toString()+"\n"+"Horários:\n"+horariosBuilder.toString();
-        if (configuracoesUsuario.isLogTela()) {
-            System.out.println(relatorio);
+        RelatorioInteracoes relatorioInteracoes = RelatorioInteracoesBuilder.builder(salaCinema).build(); //Gera o objeto do relatório
+        String relatorio = relatorioInteracoes.toString()+"\n"+"Horários:\n"+horariosBuilder.toString(); //Concatena a parte de horários
+        if (configuracoesUsuario.isLogTela()) { //Se o log for na tela
+            System.out.println(relatorio); //Então printa no console
         } else {
-            Files.writeString(Path.of(configuracoesUsuario.getNomeArquivoOutput()), relatorio);
+            Files.writeString(Path.of(configuracoesUsuario.getNomeArquivoOutput()), relatorio); //Se não escreve no arquivo
         }
     }
 

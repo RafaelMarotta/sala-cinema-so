@@ -20,36 +20,36 @@ public class ProcessadorComandos {
     }
 
     public void processarComando() {
-        System.out.print("-> ");
-        processarComando(scanner.nextLine());
+        System.out.print("-> "); //Exibe setinha no console
+        processarComando(scanner.nextLine()); //Captura a linha digitada pelo usuário e chama o método para processar o comando
     }
 
     private void processarComando(String comando) {
         try {
-            String[] strs = comando.split(" ");
-            processarComando(strs[0], strs.length > 1 ? Arrays.copyOfRange(strs, 1, strs.length) : null);
-            processarComando();
+            String[] strs = comando.split(" "); // Quebra os parâmetros pelo espaço em branco
+            processarComando(strs[0], strs.length > 1 ? Arrays.copyOfRange(strs, 1, strs.length) : null); //Exclui o comando principal e passa os parametros para frente
         } catch (Exception ex) {
-            System.out.println("Ops, comando inválido. Digite novamente o comando:");
-            processarComando();
+            System.out.println("Ops, comando inválido. Digite novamente o comando:"); //Caso o usuário digite um comando inválido retorna erro
+        } finally {
+            processarComando(); //Deixa a captura de novos comandos em loop
         }
     }
 
     private void processarComando(String comando, String[] parametros) {
         switch (comando) {
-            case "simular":
+            case "simular": //Caso o comando seja simular chama a classe responsável por executar esse comando
                 simulaProcessamentoComando.executar(parametros);
                 break;
-            case "alterar":
+            case "alterar": //Caso o comando seja alterar chama a classe responsável pro executar esse comando
                 alterarArquivosComando.executar(parametros);
                 break;
-            case "totalizar":
+            case "totalizar": //Caso o comando seja totalizar chama a classe responsável pro executar esse comando
                 totalizarConfirmacoesComando.executar();
                 break;
-            case "finalizar":
+            case "finalizar": //Caso o comando seja finalizar então encerra a execução do programa
                 System.exit(1);
                 break;
-            default:
+            default: //Caso seja um comando inválido lança a exceção "ComandoInvalidoException"
                 throw new ComandoInvalidoException();
         }
     }

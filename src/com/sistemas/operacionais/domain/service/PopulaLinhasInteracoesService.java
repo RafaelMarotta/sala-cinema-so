@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
-// Ler o arquivo de interações e popular no Map
+// Recebe uma lista de linhas do arquivo e popula no map
 public class PopulaLinhasInteracoesService extends Thread { // Herda de thread para permitir a execução em uma thread desatachada da thread principal do programa
 
     private final SalaCinemaAdicionaInteracoesService salaCinemaAdicionaInteracoesService;
@@ -60,7 +60,6 @@ public class PopulaLinhasInteracoesService extends Thread { // Herda de thread p
         try {
             // Chama o serviço responsável por adicionar a interação e incrementa o contador de interaçõe
             semaforo.acquire();
-            //System.out.printf("Interação (- %d%n) - %s - Ponto Venda - %d%n", FilesContextControl.getIdCliente(), linha, idPontoVenda); // Exibe log
             salaCinemaAdicionaInteracoesService.adicionaInteracao(linha, FilesContextControl.incrementAndGetIdCliente(), idPontoVenda);
             FilesContextControl.incrementAndGetReadedLine();
         } catch (Exception e) {

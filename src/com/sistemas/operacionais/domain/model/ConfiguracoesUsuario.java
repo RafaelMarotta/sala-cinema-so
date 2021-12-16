@@ -1,9 +1,10 @@
 package com.sistemas.operacionais.domain.model;
 
+//Classe modelo responsável por armazenar as configurações setadas pelo usuário
 public class ConfiguracoesUsuario {
     private String nomeArquivoInput = "src/com/sistemas/operacionais/resources/interacoes/interacoes_usuarios.txt";
     private String nomeArquivoOutput = "src/com/sistemas/operacionais/resources/vendas.txt";
-    private int quantidadeThreads = 4;
+    private int quantidadeThreads = 1;
     private boolean logTela;
 
     public String getNomeArquivoInput() {
